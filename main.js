@@ -7,6 +7,7 @@ const globalShortcut = electron.globalShortcut
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function () {
+  // NOTE: Add keys that you want to make unresponsive
   // TODO: Add more key codes
   var keyCodes = [
     '0',
