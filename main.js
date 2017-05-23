@@ -1,60 +1,114 @@
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-
-const path = require('path')
-const url = require('url')
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-
-function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
-}
+const globalShortcut = electron.globalShortcut
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function () {
+  // TODO: Add more key codes
+  var keyCodes = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+    'F1',
+    'F2',
+    'F3',
+    'F4',
+    'F5',
+    'F6',
+    'F7',
+    'F8',
+    'F9',
+    'F10',
+    'F11',
+    'F12',
+    'F13',
+    'F14',
+    'F15',
+    'F16',
+    'F17',
+    'F18',
+    'F19',
+    'F20',
+    'F21',
+    'F22',
+    'F23',
+    'F24',
+    'Plus',
+    'Space',
+    'Tab',
+    'Backspace',
+    'Delete',
+    'Insert',
+    'Return',
+    'Up',
+    'Down',
+    'Left',
+    'Right',
+    'Home',
+    'End',
+    'PageUp',
+    'PageDown',
+    'Escape',
+    'VolumeUp',
+    'VolumeDown',
+    'VolumeMute',
+    'MediaNextTrack',
+    'MediaPreviousTrack',
+    'MediaStop',
+    'MediaPlayPause',
+    'PrintScreen'
+  ];
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  keyCodes.forEach(function(element) {
+    // Register shortcut listener
+    const ret = globalShortcut.register(element, () => {
+      console.log(element)
+    })
+
+    // When the accelerator is already taken by other applications, 
+    // this call will silently fail. This behavior is intended by operating systems, 
+    // since they don't want applications to fight for global shortcuts
+    if (!ret) {
+      console.log('Failed to register key code: ' + element);
+    }
+  })
+
+  // Unregisters all of the global shortcuts making the keys clickable again
+  //globalShortcut.unregisterAll()
 })
-
-app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
