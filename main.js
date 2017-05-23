@@ -110,6 +110,6 @@ app.on('ready', function () {
     }
   })
 
-  // Unregisters all of the global shortcuts making the keys clickable again
+  // Unregisters all of the global shortcuts making the keys responsive again
   //globalShortcut.unregisterAll()
 })
